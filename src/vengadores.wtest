@@ -1,0 +1,35 @@
+import vengadores.*
+
+
+test "wakanda no esta en peligro" {
+	assert.notThat(wakanda.estaEnPeligro())
+}
+
+
+test "capitan america con el escudito" {
+	capitanAmerica.cambiarEscudo(escudito)
+	assert.equals(2,capitanAmerica.fuerza())
+	}
+
+
+test "halk sin tranformarse" {
+	hulk.transformarse()
+	assert.equals(100 ,hulk.fuerza())
+}
+
+
+test "fuerza de spiderman nula"{
+	assert.equals(0,spiderman.fuerza())
+}
+
+
+test "wakanda esta en peligro " {
+
+	wakanda.heroe(capitanAmerica)
+	capitanAmerica.cambiarEscudo(escudito)
+	wakanda.recibirAmenaza()
+	wakanda.recibirAmenaza()
+	wakanda.recibirAmenaza()
+	assert.that(wakanda.estaEnPeligro())
+
+}
