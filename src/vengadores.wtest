@@ -18,8 +18,8 @@ test "halk sin tranformarse" {
 }
 
 
-test "fuerza de spiderman nula"{
-	assert.equals(0,spiderman.fuerza())
+test "fuerza de spiderman poca"{
+	assert.equals(1,spiderMan.fuerza())
 }
 
 
@@ -32,4 +32,33 @@ test "wakanda esta en peligro " {
 	wakanda.recibirAmenaza()
 	assert.that(wakanda.estaEnPeligro())
 
+}
+
+
+test "antman pierde fuerza al transformarse"{
+	antman.pasarModoCuantico()
+	assert.equals(1, antman.fuerza())
+}
+
+test "wakanda es atacada drDoom"{
+	wakanda.esAtacada(drDoom)
+	assert.that(wakanda.estaEnPeligro())
+	assert.equals(drDoom,wakanda.heroe())
+	assert.equals(300,wakanda.amenaza())
+}
+
+test "wakanda es atacada spiderman"{
+	wakanda.esAtacada(spiderMan)
+	assert.notThat(wakanda.estaEnPeligro())
+	assert.equals(hulk,wakanda.heroe())
+	assert.equals(0,wakanda.amenaza())
+}
+
+
+test "wakanda defendida por pantera negra es atacada spiderman"{
+	wakanda.heroe(panteraNegra)
+	wakanda.esAtacada(spiderMan)
+	assert.notThat(wakanda.estaEnPeligro())
+	assert.equals(panteraNegra,wakanda.heroe())
+	assert.equals(0,wakanda.amenaza())
 }
