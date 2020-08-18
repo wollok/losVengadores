@@ -52,6 +52,12 @@ object ironMan {
 	}
 }
 
+object spiderman{
+	
+	method fuerza() {
+		return 0
+	}
+}
 
 object hulk {
 
