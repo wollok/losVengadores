@@ -1,89 +1,7 @@
 /** First Wollok example */
-object escudoSimple{
-	var poder = 10
-	
-	method poder(){
-		return poder
-	}
-	method empoderar(){
-		//asdfasdfasdf
-	}
-	// otros metodos
-}
-
-object escudito{
-	method poder() {
-		return 1
-	}	
-}
-
-object cacerola{
-	method cocinar(){
-		
-	}
-	method reclamarPorlacuarentea() {}
-	
-	method poder() { return 20}
-}
-
-
-
-object capitanAmerica {
-	var escudo = escudoSimple
-	
-	method cambiarEscudo(nuevo)	{
-		escudo = nuevo
-	}
-	
-	method fuerza()	{
-		return escudo.poder() * 2
-	}
-	method reforzarse() {
-		self.cambiarEscudo(cacerola)
-		
-	}
-}
-
-object ironMan {
-	var traje = false
-	
-	method reforzarse(){
-		traje = true
-	}
-		
-	method fuerza(){
-		return if(traje) 100 else 50
-	}
-}
-
-object spiderMan{
-	
-	method fuerza() {
-		return 1
-	}
-	
-	method reforzarse() {
-		// no hace nada
-	}
-}
-
-object hulk {
-
-	var fuerza = 20
-
-	method transformarse(){
-		fuerza = fuerza + 80
-	}
-	
-	method fuerza(){
-		return fuerza	
-	}
-	
-	method reforzarse() {
-		self.transformarse()
-	}
-}
-
+import wollok.game.*
+import Armas.*
+import heroes.*
 
 object wakanda {
 	var poderEjercito=1000
@@ -124,8 +42,8 @@ object wakanda {
 			amenaza -= villano.fuerza()
 		}
 	}
-	method esRey(personaje) {
-		return heroe == personaje 
+	method esRey(personajeActual) {
+		return heroe == personajeActual 
 	}
 	method poderEjercito(){
 		return poderEjercito

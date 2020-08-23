@@ -1,5 +1,6 @@
 import vengadores.*
-
+import Armas.*
+import heroes.*
 
 test "wakanda no esta en peligro" {
 	assert.notThat(wakanda.estaEnPeligro())
