@@ -1,65 +1,65 @@
-import vengadores.*
-import Armas.*
-import heroes.*
-
-test "wakanda no esta en peligro" {
-	assert.notThat(wakanda.estaEnPeligro())
-}
-
-
-test "capitan america con el escudito" {
-	capitanAmerica.cambiarEscudo(escudito)
-	assert.equals(2,capitanAmerica.fuerza())
-	}
-
-
-test "halk sin tranformarse" {
-	hulk.transformarse()
-	assert.equals(100 ,hulk.fuerza())
-}
-
-
-test "fuerza de spiderman poca"{
-	assert.equals(1,spiderMan.fuerza())
-}
-
-
-test "wakanda esta en peligro " {
-
-	wakanda.heroe(capitanAmerica)
-	capitanAmerica.cambiarEscudo(escudito)
-	wakanda.recibirAmenaza()
-	wakanda.recibirAmenaza()
-	wakanda.recibirAmenaza()
-	assert.that(wakanda.estaEnPeligro())
-
-}
-
-
-test "antman pierde fuerza al transformarse"{
-	antman.pasarModoCuantico()
-	assert.equals(1, antman.fuerza())
-}
-
-test "wakanda es atacada drDoom"{
-	wakanda.esAtacada(drDoom)
-	assert.that(wakanda.estaEnPeligro())
-	assert.equals(drDoom,wakanda.heroe())
-	assert.equals(300,wakanda.amenaza())
-}
-
-test "wakanda es atacada spiderman"{
-	wakanda.esAtacada(spiderMan)
-	assert.notThat(wakanda.estaEnPeligro())
-	assert.equals(hulk,wakanda.heroe())
-	assert.equals(0,wakanda.amenaza())
-}
-
-
-test "wakanda defendida por pantera negra es atacada spiderman"{
-	wakanda.heroe(panteraNegra)
-	wakanda.esAtacada(spiderMan)
-	assert.notThat(wakanda.estaEnPeligro())
-	assert.equals(panteraNegra,wakanda.heroe())
-	assert.equals(0,wakanda.amenaza())
-}
+//import vengadores.*
+//import Armas.*
+//import heroes.*
+//
+//test "wakanda no esta en peligro" {
+//	assert.notThat(wakanda.estaEnPeligro())
+//}
+//
+//
+//test "capitan america con el escudito" {
+//	capitanAmerica.cambiarEscudo(escudito)
+//	assert.equals(2,capitanAmerica.fuerza())
+//	}
+//
+//
+//test "halk sin tranformarse" {
+//	hulk.transformarse()
+//	assert.equals(100 ,hulk.fuerza())
+//}
+//
+//
+//test "fuerza de spiderman poca"{
+//	assert.equals(1,spiderMan.fuerza())
+//}
+//
+//
+//test "wakanda esta en peligro " {
+//
+//	wakanda.heroe(capitanAmerica)
+//	capitanAmerica.cambiarEscudo(escudito)
+//	wakanda.recibirAmenaza()
+//	wakanda.recibirAmenaza()
+//	wakanda.recibirAmenaza()
+//	assert.that(wakanda.estaEnPeligro())
+//
+//}
+//
+//
+//test "antman pierde fuerza al transformarse"{
+//	antman.pasarModoCuantico()
+//	assert.equals(1, antman.fuerza())
+//}
+//
+//test "wakanda es atacada drDoom"{
+//	wakanda.esAtacada(drDoom)
+//	assert.that(wakanda.estaEnPeligro())
+//	assert.equals(drDoom,wakanda.heroe())
+//	assert.equals(300,wakanda.amenaza())
+//}
+//
+//test "wakanda es atacada spiderman"{
+//	wakanda.esAtacada(spiderMan)
+//	assert.notThat(wakanda.estaEnPeligro())
+//	assert.equals(hulk,wakanda.heroe())
+//	assert.equals(0,wakanda.amenaza())
+//}
+//
+//
+//test "wakanda defendida por pantera negra es atacada spiderman"{
+//	wakanda.heroe(panteraNegra)
+//	wakanda.esAtacada(spiderMan)
+//	assert.notThat(wakanda.estaEnPeligro())
+//	assert.equals(panteraNegra,wakanda.heroe())
+//	assert.equals(0,wakanda.amenaza())
+//}

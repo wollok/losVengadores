@@ -1,55 +1,48 @@
 import wollok.game.*
-import vengadores.*
 import heroes.*
 import Armas.*
 
 object losVengadoresGame {
 	
 	method jugar(){
-		self.configurar()
-		game.start();
-	}
-	
-	method configurar(){
 		self.configurarPantalla()
-		self.configurarPersonaje()
-		self.setearControles()
-		self.setearHeroes()
-		self.setearArmas()
-		self.setearColisionesPersonaje()
+		self.configurarCursor()
+		self.agregarPersonajes()
+		self.definirControles()
+		game.start();
 	}
 	
 	method configurarPantalla(){
 		game.title("Vengadores Game")
 		game.width(20)
 		game.height(13)
-		game.boardGround("imagenes/fondoDeBatalla.jpg")
+		game.boardGround("fondoDeBatalla.jpg")
 	}
 	
-	method configurarPersonaje(){
-		game.addVisualCharacter(personaje)
+	method configurarCursor(){
+		game.addVisualCharacter(cursor)
+		game.whenCollideDo(cursor,{personaje => cursor.seleccionarHeroe(personaje)})
 	}
 	
-	method setearHeroes(){
-		game.addVisual(tonyStark)
-		game.addVisual(stevenRogers)
-		game.addVisual(diosDelTrueno)
-		game.addVisual(bruceBunner)
-	}
-	
-	method setearArmas(){
+	method agregarPersonajes(){
+		game.addVisual(ironMan)
+		game.addVisual(hulk)
+		game.addVisual(capitanAmerica)
+		game.addVisual(thor)
 		game.addVisual(escudito)
 		game.addVisual(escudoSimple)
-		game.addVisual(martilloThor)
-		game.addVisual(cacerola)
+		game.addVisual(wakanda)
+		//game.addVisual(cacerola)
 	}
 	
-	method setearColisionesPersonaje(){
-		game.whenCollideDo(personaje,{elemento => elemento.colisionar(personaje)})
-	}
 	
-	method setearControles(){
-		keyboard.n().onPressDo {game.say(personaje,personaje.heroeElegido().nombre())}
-		keyboard.t().onPressDo { personaje.transformarme() }
+	method definirControles(){
+		keyboard.n().onPressDo {game.say(cursor,cursor.heroeElegido().saludo())}
+		keyboard.r().onPressDo {cursor.reforzarHeroe() }
+		keyboard.a().onPressDo {wakanda.esAtacada(cursor.heroeElegido())}
+		keyboard.s().onPressDo {wakanda.situacion()}
+		keyboard.num(1).onPressDo { capitanAmerica.cambiarEscudo(escudito)}
+		keyboard.num(2).onPressDo { capitanAmerica.cambiarEscudo(escudoSimple)}
+		//keyboard.num(3).onPressDo { capitanAmerica.cambiarEscudo(cacerola)}
 	}
 }

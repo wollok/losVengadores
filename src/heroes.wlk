@@ -1,89 +1,49 @@
 import wollok.game.*
 import Armas.*
 
-//------------------ Player (Protagonista) --------------//
-object personaje{
-	var property image = "imagenes/personaje.png"
-	var property position = game.at(5,5)
+//------------------ Cursor (Protagonista) --------------//
+object cursor{
+	const imagenSinHeroe = "personaje.png"
+	
+	var property position = game.center()
 	var property heroeElegido = null
 	
+	
+	method image() {
+		if (self.sinHeroe()) {
+			return imagenSinHeroe 
+		}
+		return heroeElegido.image()
+	} 
+	
+	method sinHeroe() {
+		return heroeElegido == null
+	}
 	method seleccionarHeroe(nuevoHeroe){
 		heroeElegido = nuevoHeroe
 	}
 	
-	method transformarme(){
-		if(self.puedoTransformarme()){
-			image = heroeElegido.imagenHeroe()
-			heroeElegido.reforzarse()
-		}
-		else
+	method reforzarHeroe(){
+		if(self.sinHeroe())
 			game.say(self,"Seleccione un personaje primero")
+		else
+			heroeElegido.reforzarse()
 	}
-	
-	method equiparArma(arma){
-		//Habria que controlar que ya se haya elegido al heroe
-		heroeElegido.equiparArma(arma)
-		image = heroeElegido.imagenHeroe()
-	}
-	
-	method puedoTransformarme() = heroeElegido != null
+
 }
 
-//---------------- Seleccionador de Heroes ----------//
-object tonyStark{
-	var property image = "imagenes/tonyStark.jpg"
-	var property position = game.at(12,0)
-	
-	method colisionar(protagonista){
-		protagonista.seleccionarHeroe(ironMan)
-		protagonista.image(self.image())
-	}	
-}
-
-object stevenRogers {
-	var property image = "imagenes/stevenRogers.jpg"
-	var property position = game.at(14,0)		
-
-	method colisionar(protagonista){
-		protagonista.seleccionarHeroe(capitanAmerica)
-		protagonista.image(self.image())
-	}
-}
-
-object diosDelTrueno {
-	var property image = "imagenes/diosDelTrueno.jpg"
-	var property position = game.at(16,0)
-	
-	method colisionar(protagonista){
-		protagonista.seleccionarHeroe(thor)
-		protagonista.image(self.image())
-	}			
-}
-
-object bruceBunner{
-	var property image = "imagenes/bruceBunner.jpg"
-	var property position = game.at(18,0)				
-
-	method colisionar(protagonista){
-		protagonista.seleccionarHeroe(hulk)
-		protagonista.image(self.image())
-	}
-}
 
 //------------- Heroes ------------------------ //
 
 object capitanAmerica {
-	var property imagenHeroe = "imagenes/CAsinEscudo.jpg"
-	const imagenConEscudo = "imagenes/CAconEscudo.png"
+
 	var escudo = escudoSimple
 	var incrementoPorTraje = 2
-	
-	method equiparArma(arma){
-		self.cambiarEscudo(arma)
-	}
+
+	method position() = game.at(14,0)		
+	method image() = "CA" + escudo.desc() + "Escudo." + escudo.ext()
 	
 	method cambiarEscudo(nuevo)	{
-		imagenHeroe = imagenConEscudo
 		escudo = nuevo
 	}
 	
@@ -94,78 +54,142 @@ object capitanAmerica {
 		incrementoPorTraje = 4
 	}
 	
-	method nombre() = "Steven Rogers"
+	method saludo() = "Steven Rogers"
+
 }
 
-object ironMan {
-	var traje = false
-	
-	var property imagenHeroe = "imagenes/ironConTraje.png"
-	
-	method reforzarse(){
-		traje = true
-	}
-		
-	method fuerza(){
-		return if(traje) 100 else 50
-	}
-	
-	method equiparArma(arma){
-		
-	}
-	
-	method nombre() = "Tony Stark"
-}
 
 object hulk {
 
 	var fuerza = 20
-
-	var property imagenHeroe = "imagenes/hulkTransformado.png"
+	var image = "bruceBunner.jpg"
+	
+	method position() = game.at(10,0)
+	method image() = image 
 
 	method transformarse(){
 		fuerza = fuerza + 80
+		image = "hulkTransformado.png" 
 	}
 	
-	method fuerza(){
-		return fuerza	
-	}
+	method fuerza() = fuerza	
 	
 	method reforzarse() {
 		self.transformarse()
 	}
 	
-	method nombre() = "Bruce Banner"
+	method saludo() = "Bruce !!!!"
 }
 
-object thor{
-	var property imagenHeroe = "imagenes/ThorSinMartillo.jpg"
-	const imagenConMartillo = "imagenes/thorConMartillo.jpg"
-	var martillo
-	var tieneMartillo = false
-	var fuerza = 0
+
+
+
+
+
+object ironMan {
+	var traje = false
 	
-	method equiparArma(nuevaArma){
-		martillo = nuevaArma
-		tieneMartillo = true
-		imagenHeroe = imagenConMartillo
-	}
+	method position() = game.at(12,0)
+	method image() = if(traje) "ironConTraje.png" else "tonyStark.jpg"
+	method reforzarse(){ traje = not traje }
+	method fuerza() = if(traje) 100 else 50
+	method saludo() = "Soy Tony Stark"
+}
+
+
+object thor{
+
+	var fuerza = 0
+	var position = game.at(16,0)
+	
+	method position() = position
+
+	method image()  = "Thor" + (if(martilloThor.activo()) "Con" else "Sin") + "Martillo.jpg"
 	
 	method reforzarse(){
-		fuerza = 20
+		fuerza += 20
+		martilloThor.activar()
+		position = game.at(position.x(),0.randomUpTo(game.height()).truncate(0))
 	}
 	
 	method fuerza(){
-		return fuerza + self.poderExtra()
+		return fuerza + martilloThor.poder()
 	}
 	
-	method poderExtra(){
-		return if(tieneMartillo) martillo.poder() else 0
-	}
-	
-	method nombre() = "El dios del trueno"
+	method saludo() = "El dios del trueno"
 }
 
+object martilloThor{
+	var activo = false
+	method image() = "martilloThor.png"
+	method position() = thor.position().right(2)
+	method poder() =  if (activo) 1000 else 0
+	
+	method activar() {
+		if(!activo){
+			game.addVisual(self)
+			activo = true
+		}
+	}
+
+	method activo() = activo
+	
+}
+
+
+object wakanda {
+
+	var heroe = hulk
+	var amenaza = 0
+
+	method image() = "wakanda.png" 
+	method position() = game.at(0,10)
+
+	
+	method recibirAmenaza(){
+		amenaza = amenaza + 1
+	}
+	
+	method heroe() {
+		return heroe
+	}
+	
+	method amenaza() {
+		return amenaza
+	}
+	
+	method situacion() {
+		game.say(self, "Me defiende " + heroe.saludo() + "Amenaza: " + amenaza.toString() )
+	}
+	
+	method estaEnPeligro(){
+		return heroe.fuerza() < amenaza 
+	}
+	
+	method heroe(nuevo){
+		heroe = nuevo
+	}
+	
+	
+	method esAtacada(villano){
+		amenaza += villano.fuerza()
+		game.say(villano, "ataco con" + villano.fuerza().toString())
+		heroe.reforzarse()
+		game.say(heroe, "ahora tengo mas fuerza: " + heroe.fuerza().toString())
+		if(self.estaEnPeligro()){
+			game.removeVisual(heroe)
+			heroe = villano
+			amenaza += villano.fuerza()
+		}
+		else {
+			amenaza -= villano.fuerza()
+		}
+	}
+
+}
+
+
+// OTROS
 object spiderMan{
 	
 	var modoVenom = false
@@ -182,7 +206,7 @@ object spiderMan{
 		modoVenom = true
 	}
 	
-	method nombre() = "Peter Parker"
+	method saludo() = "Peter Parker"
 	
 	method equiparArma(){
 		

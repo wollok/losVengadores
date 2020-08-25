@@ -1,9 +1,9 @@
 import wollok.game.*
 import heroes.*
 
-object colisionArmas{
+object escudero{
 	
-	method ejecutarColision(protagonista,arma){
+	method tomarEscudo(protagonista,arma){
 		if(arma.personajePuedeUsar(protagonista.heroeElegido())){
 			protagonista.equiparArma(arma)
 			game.say(arma,arma.mensajeCorrecto())
@@ -16,8 +16,9 @@ object colisionArmas{
 // -------------- Armas de los vengadores ----------------------- //
 object escudoSimple{
 	const poder = 10
-	var property image = "imagenes/escudoSimple.png"
-	var property position = game.at(0,0)
+	
+	method image() = "escudoSimple.png"
+	method position() = game.origin()
 	
 	method poder(){
 		return poder
@@ -26,10 +27,10 @@ object escudoSimple{
 		//
 	}
 	
-	method colisionar(protagonista){
-		colisionArmas.ejecutarColision(protagonista, self)
-	}
+	method desc() = "sin"
+	method ext() = "jpg"
 	
+
 	method personajePuedeUsar(protagonista){
 		return protagonista == capitanAmerica
 	}
@@ -40,69 +41,40 @@ object escudoSimple{
 }
 
 object escudito{
-	var property image = "imagenes/escudito.png"
-	var property position = game.at(2,0)
+	method image() = "escudito.png"
+	method position() = escudoSimple.position().right(2)
 	
 	method poder() {
 		return 1
 	}
-	
-	method colisionar(protagonista){
-		colisionArmas.ejecutarColision(protagonista, self)
-	}	
 	
 	method personajePuedeUsar(protagonista){
 		return false
 	}
 
 	method mensajeCorrecto() = "No soy gran cosa, pero te protejo"
-	
-	method mensajeIncorrecto() = "Una lastima que no me puedas usar" 
-
+	method mensajeIncorrecto() = "Una lastima que no me puedas usar"
+	 
+	method desc() = "con"
+	method ext() = "png"
 }
 
-object martilloThor{
-	var property image = "imagenes/martilloThor.png"
-	var property position = game.at(4,0)
-	
-	method poder() {
-		return 100
-	}
-	
-	method colisionar(protagonista){
-		colisionArmas.ejecutarColision(protagonista, self)
-	}
-	
-	method personajePuedeUsar(protagonista){
-		return protagonista == thor
-	}
 
-	method mensajeCorrecto() = "Pudiste levantarme, mis respetos"
-	
-	method mensajeIncorrecto() = "No sos capaz de levantarme" 
-
-}
 
 object cacerola{
-	var property image = "imagenes/cacerola.png"
-	var property position = game.at(6,0)	
+	method image() = "cacerola.png"
+	method position() = game.at(6,0)	
 	
 	method cocinar(){
 	}
 	
 	method reclamarPorlacuarentea() {}
-	
 	method poder() = 20
-
-	method colisionar(protagonista){
-		colisionArmas.ejecutarColision(protagonista, self)
-	}
 
 	method personajePuedeUsar(protagonista){
 		return false
 	}
 
 	method mensajeCorrecto() = "Vamos al obelisco"
-	
 	method mensajeIncorrecto() = "No sos revolucionario" 
 }
